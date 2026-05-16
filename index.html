@@ -16,18 +16,17 @@
 }
 
 body{
+    overflow:hidden;
     background:
     linear-gradient(180deg,#0f172a,#111827,#020617);
-    overflow:hidden;
     color:white;
 }
 
-/* 星空背景 */
+/* 星空 */
 
 #stars{
     position:fixed;
-    width:100%;
-    height:100%;
+    inset:0;
     z-index:0;
 }
 
@@ -45,50 +44,48 @@ body{
     50%{opacity:1;}
 }
 
-/* App容器 */
+/* 页面 */
 
-.app{
-    position:relative;
+.page{
+    position:absolute;
+    inset:0;
     z-index:2;
-    width:100%;
-    max-width:500px;
-    height:100vh;
-    margin:auto;
-    display:flex;
-    flex-direction:column;
+    overflow:auto;
+    padding-bottom:100px;
 }
 
-/* 顶部 */
+.hidden{
+    display:none;
+}
+
+/* 首页 */
 
 .header{
-    padding:20px;
     text-align:center;
+    padding:25px 15px 10px;
 }
 
 .logo{
     font-size:34px;
     font-weight:bold;
-    text-shadow:0 0 18px cyan;
+    text-shadow:0 0 15px cyan;
 }
 
 .sub{
-    margin-top:6px;
     opacity:0.8;
+    margin-top:6px;
 }
 
-/* 用户信息 */
-
 .userBox{
-    margin:15px;
+    margin:18px;
+    padding:18px;
+
+    border-radius:24px;
+
     background:
     linear-gradient(145deg,#1e293b,#334155);
 
-    border-radius:22px;
-
-    padding:18px;
-
     display:flex;
-    justify-content:space-between;
     align-items:center;
 
     box-shadow:
@@ -96,9 +93,10 @@ body{
 }
 
 .avatar{
-    width:65px;
-    height:65px;
+    width:70px;
+    height:70px;
     border-radius:50%;
+
     background:
     linear-gradient(145deg,#00d2ff,#3a7bd5);
 
@@ -106,22 +104,22 @@ body{
     justify-content:center;
     align-items:center;
 
-    font-size:30px;
+    font-size:34px;
 }
 
-.userInfo{
+.info{
+    margin-left:15px;
     flex:1;
-    margin-left:14px;
 }
 
 .name{
-    font-size:22px;
+    font-size:24px;
     font-weight:bold;
 }
 
-.level{
-    margin-top:5px;
+.lv{
     color:#ffe66d;
+    margin-top:6px;
 }
 
 .coin{
@@ -138,14 +136,14 @@ body{
     padding:18px;
 }
 
-.card{
+.menuCard{
+
+    height:150px;
+
+    border-radius:25px;
 
     background:
     linear-gradient(145deg,#00d2ff,#3a7bd5);
-
-    border-radius:24px;
-
-    height:150px;
 
     display:flex;
     flex-direction:column;
@@ -158,10 +156,10 @@ body{
 
     box-shadow:
     0 0 18px rgba(0,255,255,.25),
-    inset 0 0 10px rgba(255,255,255,.3);
+    inset 0 0 10px rgba(255,255,255,.25);
 }
 
-.card:hover{
+.menuCard:hover{
     transform:scale(1.05);
 }
 
@@ -171,87 +169,96 @@ body{
 
 .cardTitle{
     margin-top:12px;
-    font-size:20px;
+    font-size:22px;
     font-weight:bold;
 }
 
-/* 底部菜单 */
+/* 游戏 */
 
-.bottomBar{
+.gameTop{
+    padding:20px;
+    text-align:center;
+}
 
-    margin-top:auto;
+.levelText{
+    font-size:30px;
+    color:#ffe66d;
+}
 
-    height:85px;
+.exp{
+    margin:15px auto;
+    width:90%;
+    height:18px;
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.expFill{
+    height:100%;
+    width:0%;
+    background:
+    linear-gradient(90deg,#00f5ff,#00ff95);
+    transition:0.5s;
+}
+
+.grid{
+    display:grid;
+    gap:12px;
+    justify-content:center;
+    padding:20px;
+}
+
+.card{
+
+    width:80px;
+    height:80px;
+
+    border-radius:22px;
 
     background:
-    rgba(15,23,42,.95);
-
-    border-top:
-    1px solid rgba(255,255,255,.1);
+    linear-gradient(145deg,#00d2ff,#3a7bd5);
 
     display:flex;
-    justify-content:space-around;
-    align-items:center;
-
-    backdrop-filter:blur(10px);
-}
-
-.navBtn{
-    text-align:center;
-    font-size:14px;
-    opacity:0.85;
-}
-
-.navIcon{
-    font-size:28px;
-    margin-bottom:5px;
-}
-
-/* 弹窗 */
-
-.popup{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.7);
-
-    display:none;
-
     justify-content:center;
     align-items:center;
 
-    z-index:999;
-}
+    font-size:18px;
+    font-weight:bold;
 
-.popupBox{
+    cursor:pointer;
 
-    width:90%;
-
-    max-width:420px;
-
-    background:
-    linear-gradient(145deg,#1e293b,#334155);
-
-    border-radius:30px;
-
-    padding:30px;
-
-    text-align:center;
+    transition:0.25s;
 
     box-shadow:
-    0 0 30px rgba(0,255,255,.35);
+    0 0 15px rgba(0,255,255,.25),
+    inset 0 0 10px rgba(255,255,255,.3);
 }
 
-.popupTitle{
-    font-size:30px;
-    margin-bottom:15px;
+.card.selected{
+    background:#ffe66d;
+    color:black;
+    transform:scale(1.1);
 }
 
-.playBtn{
+.card.matched{
+    opacity:0;
+    transform:scale(0);
+    pointer-events:none;
+}
 
-    margin-top:25px;
+.message{
+    text-align:center;
+    font-size:26px;
+    color:#00ff95;
+    min-height:50px;
+}
+
+.backBtn{
+
+    margin:25px auto;
+
+    display:block;
 
     border:none;
 
@@ -259,23 +266,55 @@ body{
 
     color:black;
 
-    padding:16px 36px;
+    padding:16px 34px;
 
     border-radius:18px;
 
-    font-size:22px;
+    font-size:20px;
 
     font-weight:bold;
-
-    cursor:pointer;
 }
 
-/* 手机适配 */
+/* 底部栏 */
+
+.bottomBar{
+
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:85px;
+
+    background:
+    rgba(15,23,42,.95);
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    backdrop-filter:blur(10px);
+
+    z-index:10;
+}
+
+.navBtn{
+    text-align:center;
+    font-size:14px;
+}
+
+.navIcon{
+    font-size:28px;
+    margin-bottom:4px;
+}
+
+/* 手机 */
 
 @media(max-width:600px){
 
     .card{
-        height:130px;
+        width:68px;
+        height:68px;
+        font-size:15px;
     }
 
     .logo{
@@ -288,11 +327,13 @@ body{
 </head>
 <body>
 
+<!-- 星空 -->
+
 <div id="stars"></div>
 
-<div class="app">
+<!-- 首页 -->
 
-    <!-- 顶部 -->
+<div class="page" id="homePage">
 
     <div class="header">
 
@@ -306,41 +347,36 @@ body{
 
     </div>
 
-    <!-- 用户 -->
-
     <div class="userBox">
 
         <div class="avatar">
             🧒
         </div>
 
-        <div class="userInfo">
+        <div class="info">
 
             <div class="name">
                 小小冒险家
             </div>
 
-            <div class="level">
+            <div class="lv">
                 Lv.3 英语学徒
             </div>
 
         </div>
 
-        <div class="coin">
-            ⭐ 128
+        <div class="coin" id="coin">
+            ⭐ 0
         </div>
 
     </div>
 
-    <!-- 功能菜单 -->
-
     <div class="menu">
 
-        <div class="card" onclick="openGame()">
+        <div class="menuCard"
+        onclick="startGame()">
 
-            <div class="icon">
-                🎮
-            </div>
+            <div class="icon">🎮</div>
 
             <div class="cardTitle">
                 开始闯关
@@ -348,11 +384,9 @@ body{
 
         </div>
 
-        <div class="card">
+        <div class="menuCard">
 
-            <div class="icon">
-                🐶
-            </div>
+            <div class="icon">🐶</div>
 
             <div class="cardTitle">
                 动物英语
@@ -360,11 +394,9 @@ body{
 
         </div>
 
-        <div class="card">
+        <div class="menuCard">
 
-            <div class="icon">
-                🍎
-            </div>
+            <div class="icon">🍎</div>
 
             <div class="cardTitle">
                 水果乐园
@@ -372,11 +404,9 @@ body{
 
         </div>
 
-        <div class="card">
+        <div class="menuCard">
 
-            <div class="icon">
-                🚀
-            </div>
+            <div class="icon">🚀</div>
 
             <div class="cardTitle">
                 每日挑战
@@ -386,68 +416,73 @@ body{
 
     </div>
 
-    <!-- 底部 -->
+</div>
 
-    <div class="bottomBar">
+<!-- 游戏页 -->
 
-        <div class="navBtn">
+<div class="page hidden" id="gamePage">
 
-            <div class="navIcon">🏠</div>
+    <div class="gameTop">
 
-            首页
-
+        <div class="levelText" id="levelText">
+            第1关
         </div>
 
-        <div class="navBtn">
+        <div class="exp">
 
-            <div class="navIcon">🎮</div>
-
-            游戏
-
-        </div>
-
-        <div class="navBtn">
-
-            <div class="navIcon">🏆</div>
-
-            成就
-
-        </div>
-
-        <div class="navBtn">
-
-            <div class="navIcon">⚙️</div>
-
-            设置
+            <div class="expFill"
+            id="expFill"></div>
 
         </div>
 
     </div>
 
+    <div class="grid" id="grid"></div>
+
+    <div class="message" id="message"></div>
+
+    <button class="backBtn"
+    onclick="goHome()">
+
+        返回首页
+
+    </button>
+
 </div>
 
-<!-- 弹窗 -->
+<!-- 底部 -->
 
-<div class="popup" id="popup">
+<div class="bottomBar">
 
-    <div class="popupBox">
+    <div class="navBtn">
 
-        <div class="popupTitle">
-            🎉 英语闯关模式
-        </div>
+        <div class="navIcon">🏠</div>
 
-        <p>
-            10大关卡<br><br>
-            动物 / 水果 / 数字 / 颜色<br><br>
-            点击单词自动发音
-        </p>
+        首页
 
-        <button class="playBtn"
-        onclick="startGame()">
+    </div>
 
-            开始冒险 →
+    <div class="navBtn">
 
-        </button>
+        <div class="navIcon">🎮</div>
+
+        游戏
+
+    </div>
+
+    <div class="navBtn">
+
+        <div class="navIcon">🏆</div>
+
+        成就
+
+    </div>
+
+    <div class="navBtn">
+
+        <div class="navIcon">⚙️</div>
+
+        设置
 
     </div>
 
@@ -475,28 +510,261 @@ for(let i=0;i<120;i++){
 
 }
 
-/* 打开游戏 */
+/* 页面 */
 
-function openGame(){
+const homePage =
+document.getElementById("homePage");
 
-    document.getElementById("popup")
-    .style.display="flex";
+const gamePage =
+document.getElementById("gamePage");
+
+/* 游戏 */
+
+const levels = [
+
+["cat","dog"],
+
+["apple","banana","cat"],
+
+["red","blue","green","dog"],
+
+["sun","moon","star","apple"],
+
+["fish","bird","tiger","lion"],
+
+["one","two","three","four","five"],
+
+["happy","sad","big","small","hot"],
+
+["car","bus","train","plane","bike"],
+
+["milk","bread","cake","rice","egg"],
+
+["teacher","student","book","pen","school"]
+
+];
+
+let currentLevel=0;
+
+let selected=[];
+
+let starsScore=0;
+
+const grid=document.getElementById("grid");
+
+const message=document.getElementById("message");
+
+const levelText=
+document.getElementById("levelText");
+
+const expFill=
+document.getElementById("expFill");
+
+const coin=
+document.getElementById("coin");
+
+/* 发音 */
+
+function speak(word){
+
+    const utter =
+    new SpeechSynthesisUtterance(word);
+
+    utter.lang="en-US";
+
+    utter.rate=0.9;
+
+    speechSynthesis.speak(utter);
 
 }
 
-/* 开始 */
+/* 开始游戏 */
 
 function startGame(){
 
-    speechSynthesis.speak(
-        new SpeechSynthesisUtterance(
-            "Welcome to Kids English Adventure"
-        )
+    homePage.classList.add("hidden");
+
+    gamePage.classList.remove("hidden");
+
+    currentLevel=0;
+
+    loadLevel();
+
+}
+
+/* 返回首页 */
+
+function goHome(){
+
+    gamePage.classList.add("hidden");
+
+    homePage.classList.remove("hidden");
+
+}
+
+/* 经验条 */
+
+function updateExp(){
+
+    const percent =
+    (currentLevel/levels.length)*100;
+
+    expFill.style.width =
+    percent+"%";
+
+}
+
+/* 加载关卡 */
+
+function loadLevel(){
+
+    selected=[];
+
+    grid.innerHTML="";
+
+    message.innerHTML="";
+
+    levelText.innerHTML=
+    `🎮 第 ${currentLevel+1} 关`;
+
+    updateExp();
+
+    let words=[...levels[currentLevel]];
+
+    let cards=[...words,...words];
+
+    cards.sort(()=>Math.random()-0.5);
+
+    let size=Math.ceil(
+        Math.sqrt(cards.length)
     );
 
-    alert(
-"这里以后可以进入你的连连看正式游戏页面！"
-    );
+    grid.style.gridTemplateColumns=
+    `repeat(${size},1fr)`;
+
+    cards.forEach(word=>{
+
+        const card=
+        document.createElement("div");
+
+        card.className="card";
+
+        card.innerHTML=word;
+
+        card.dataset.word=word;
+
+        card.onclick=()=>selectCard(card);
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+/* 点击 */
+
+function selectCard(card){
+
+    if(
+        card.classList.contains("matched")
+        ||
+        card.classList.contains("selected")
+    ) return;
+
+    card.classList.add("selected");
+
+    speak(card.dataset.word);
+
+    selected.push(card);
+
+    if(selected.length===2){
+
+        const a=selected[0];
+
+        const b=selected[1];
+
+        if(a.dataset.word===b.dataset.word){
+
+            setTimeout(()=>{
+
+                a.classList.add("matched");
+
+                b.classList.add("matched");
+
+                starsScore++;
+
+                coin.innerHTML=
+                `⭐ ${starsScore}`;
+
+                checkWin();
+
+            },300);
+
+        }else{
+
+            setTimeout(()=>{
+
+                a.classList.remove("selected");
+
+                b.classList.remove("selected");
+
+            },600);
+
+        }
+
+        selected=[];
+
+    }
+
+}
+
+/* 通关 */
+
+function checkWin(){
+
+    const total=
+    document.querySelectorAll(".card")
+    .length;
+
+    const matched=
+    document.querySelectorAll(".matched")
+    .length;
+
+    if(total===matched){
+
+        message.innerHTML=
+        "🎉 通关成功！";
+
+        setTimeout(()=>{
+
+            currentLevel++;
+
+            if(currentLevel<levels.length){
+
+                loadLevel();
+
+            }else{
+
+                finalWin();
+
+            }
+
+        },1800);
+
+    }
+
+}
+
+/* 最终 */
+
+function finalWin(){
+
+    grid.innerHTML="";
+
+    message.innerHTML=
+    "🏆 恭喜完成全部10关！";
+
+    speak("Congratulations");
 
 }
 
