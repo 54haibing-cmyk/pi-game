@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Kids English Adventure</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:
+linear-gradient(180deg,#0f172a,#111827,#020617);
+overflow:hidden;
+color:white;
+}
+
+/* 星空 */
+
+#stars{
+position:fixed;
+inset:0;
+z-index:0;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:twinkle 4s infinite;
+}
+
+@keyframes twinkle{
+0%,100%{opacity:0.2;}
+50%{opacity:1;}
+}
+
+/* 页面 */
+
+.page{
+position:absolute;
+inset:0;
+z-index:2;
+overflow:auto;
+padding-bottom:100px;
+}
+
+.hidden{
+display:none;
+}
+
+/* 首页 */
+
+.home{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:40px;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+text-shadow:0 0 15px cyan;
+}
+
+.sub{
+margin-top:8px;
+opacity:0.8;
+}
+
+.playBtn{
+
+margin-top:50px;
+
+width:220px;
+height:80px;
+
+border:none;
+
+border-radius:25px;
+
+font-size:28px;
+font-weight:bold;
+
+background:
+linear-gradient(145deg,#00d2ff,#3a7bd5);
+
+color:white;
+
+box-shadow:
+0 0 25px rgba(0,255,255,.35);
+
+cursor:pointer;
+
+transition:0.25s;
+}
+
+.playBtn:hover{
+transform:scale(1.05);
+}
+
+/* 游戏 */
+
+.top{
+padding-top:20px;
+text-align:center;
+}
+
+.level{
+font-size:28px;
+color:#ffe66d;
+}
+
+.grid{
+display:grid;
+gap:12px;
+justify-content:center;
+padding:25px;
+}
+
+.card{
+
+width:80px;
+height:80px;
+
+border-radius:22px;
+
+background:
+linear-gradient(145deg,#00d2ff,#3a7bd5);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:18px;
+font-weight:bold;
+
+cursor:pointer;
+
+transition:0.25s;
+
+box-shadow:
+0 0 18px rgba(0,255,255,.25),
+inset 0 0 10px rgba(255,255,255,.3);
+
+user-select:none;
+}
+
+.card.selected{
+background:#ffe66d;
+color:black;
+transform:scale(1.1);
+}
+
+.card.matched{
+opacity:0;
+transform:scale(0);
+pointer-events:none;
+}
+
+.message{
+
+text-align:center;
+
+font-size:32px;
+
+margin-top:15px;
+
+color:#00ff95;
+
+text-shadow:
+0 0 15px #00ff95;
+}
+
+/* 规则弹窗 */
+
+.popup{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,.75);
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:999;
+}
+
+.popupBox{
+
+width:90%;
+max-width:420px;
+
+background:
+linear-gradient(145deg,#1e293b,#334155);
+
+padding:30px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 0 30px rgba(0,255,255,.3);
+}
+
+.popupTitle{
+font-size:30px;
+margin-bottom:20px;
+}
+
+.startBtn{
+
+margin-top:25px;
+
+padding:16px 34px;
+
+border:none;
+
+border-radius:18px;
+
+background:#00eaff;
+
+font-size:22px;
+font-weight:bold;
+
+cursor:pointer;
+}
+
+/* 恭喜动画 */
+
+.bigWin{
+
+font-size:55px;
+
+animation:boom 1s infinite;
+}
+
+@keyframes boom{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.15);}
+100%{transform:scale(1);}
+
+}
+
+/* 手机 */
+
+@media(max-width:600px){
+
+.card{
+width:68px;
+height:68px;
+font-size:15px;
+}
+
+.logo{
+font-size:28px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- 星空 -->
+
+<div id="stars"></div>
+
+<!-- 首页 -->
+
+<div class="page home" id="homePage">
+
+<div class="logo">
+🌟 Kids English 🌟
+</div>
+
+<div class="sub">
+幼儿英语闯关乐园
+</div>
+
+<button class="playBtn" id="playBtn">
+🎮 开始游戏
+</button>
+
+</div>
+
+<!-- 游戏 -->
+
+<div class="page hidden" id="gamePage">
+
+<div class="top">
+
+<div class="level" id="levelText">
+第1关
+</div>
+
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="message" id="message"></div>
+
+</div>
+
+<!-- 规则 -->
+
+<div class="popup" id="popup">
+
+<div class="popupBox">
+
+<div class="popupTitle">
+📖 游戏规则
+</div>
+
+<p>
+
+点击两个相同英语单词即可消除<br><br>
+
+全部消除即可进入下一关<br><br>
+
+点击单词会自动英语发音
+
+</p>
+
+<button class="startBtn" id="startBtn">
+开始冒险 →
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* 星空 */
+
+const stars=document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+const s=document.createElement("div");
+
+s.className="star";
+
+s.style.left=Math.random()*100+"%";
+
+s.style.top=Math.random()*100+"%";
+
+s.style.animationDelay=Math.random()*5+"s";
+
+stars.appendChild(s);
+
+}
+
+/* 页面 */
+
+const homePage=document.getElementById("homePage");
+
+const gamePage=document.getElementById("gamePage");
+
+const popup=document.getElementById("popup");
+
+/* 按钮 */
+
+document.getElementById("playBtn")
+.addEventListener("click",()=>{
+
+popup.style.display="flex";
+
+});
+
+/* 开始 */
+
+document.getElementById("startBtn")
+.addEventListener("click",()=>{
+
+popup.style.display="none";
+
+homePage.classList.add("hidden");
+
+gamePage.classList.remove("hidden");
+
+startMusic();
+
+currentLevel=0;
+
+loadLevel();
+
+});
+
+/* 音效 */
+
+function beep(freq,time){
+
+const ctx=new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+const osc=ctx.createOscillator();
+
+const gain=ctx.createGain();
+
+osc.connect(gain);
+
+gain.connect(ctx.destination);
+
+osc.frequency.value=freq;
+
+osc.start();
+
+gain.gain.exponentialRampToValueAtTime(
+0.00001,
+ctx.currentTime+time
+);
+
+osc.stop(ctx.currentTime+time);
+
+}
+
+/* 背景音乐 */
+
+function startMusic(){
+
+beep(220,0.2);
+
+}
+
+/* 发音 */
+
+function speak(word){
+
+const utter=
+new SpeechSynthesisUtterance(word);
+
+utter.lang="en-US";
+
+speechSynthesis.speak(utter);
+
+}
+
+/* 关卡 */
+
+const levels=[
+
+["cat","dog"],
+
+["apple","banana","cat"],
+
+["red","blue","green","dog"],
+
+["sun","moon","star","apple"],
+
+["fish","bird","tiger","lion"],
+
+["one","two","three","four","five"],
+
+["happy","sad","big","small","hot"],
+
+["car","bus","train","plane","bike"],
+
+["milk","bread","cake","rice","egg"],
+
+["teacher","student","book","pen","school"]
+
+];
+
+let currentLevel=0;
+
+let selected=[];
+
+const grid=document.getElementById("grid");
+
+const message=document.getElementById("message");
+
+const levelText=document.getElementById("levelText");
+
+/* 加载 */
+
+function loadLevel(){
+
+selected=[];
+
+grid.innerHTML="";
+
+message.innerHTML="";
+
+message.className="message";
+
+levelText.innerHTML=
+`🎮 第 ${currentLevel+1} 关`;
+
+let words=[...levels[currentLevel]];
+
+let cards=[...words,...words];
+
+cards.sort(()=>Math.random()-0.5);
+
+let size=Math.ceil(Math.sqrt(cards.length));
+
+grid.style.gridTemplateColumns=
+`repeat(${size},1fr)`;
+
+cards.forEach(word=>{
+
+const card=document.createElement("div");
+
+card.className="card";
+
+card.innerHTML=word;
+
+card.dataset.word=word;
+
+card.addEventListener("click",()=>{
+
+selectCard(card);
+
+});
+
+grid.appendChild(card);
+
+});
+
+}
+
+/* 点击 */
+
+function selectCard(card){
+
+if(
+card.classList.contains("matched")
+||
+card.classList.contains("selected")
+) return;
+
+card.classList.add("selected");
+
+speak(card.dataset.word);
+
+selected.push(card);
+
+if(selected.length===2){
+
+const a=selected[0];
+
+const b=selected[1];
+
+if(a.dataset.word===b.dataset.word){
+
+beep(700,0.15);
+
+setTimeout(()=>{
+
+a.classList.add("matched");
+
+b.classList.add("matched");
+
+checkWin();
+
+},300);
+
+}else{
+
+beep(180,0.2);
+
+setTimeout(()=>{
+
+a.classList.remove("selected");
+
+b.classList.remove("selected");
+
+},650);
+
+}
+
+selected=[];
+
+}
+
+}
+
+/* 通关 */
+
+function checkWin(){
+
+const total=
+document.querySelectorAll(".card")
+.length;
+
+const matched=
+document.querySelectorAll(".matched")
+.length;
+
+if(total===matched){
+
+message.innerHTML=
+"👍 太棒啦！<br>🎉 恭喜通关！";
+
+message.classList.add("bigWin");
+
+beep(1000,0.3);
+
+setTimeout(()=>{
+
+currentLevel++;
+
+if(currentLevel<levels.length){
+
+loadLevel();
+
+}else{
+
+finalWin();
+
+}
+
+},2200);
+
+}
+
+}
+
+/* 最终 */
+
+function finalWin(){
+
+grid.innerHTML="";
+
+message.innerHTML=
+"🏆 恭喜完成全部10关！";
+
+message.classList.add("bigWin");
+
+speak("Congratulations");
+
+beep(1200,0.5);
+
+}
+
+</script>
+
+</body>
+</html>
