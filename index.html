@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Kids English Adventure</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:
+    linear-gradient(180deg,#0f172a,#111827,#020617);
+    overflow:hidden;
+    color:white;
+}
+
+/* 星空背景 */
+
+#stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 4s infinite;
+}
+
+@keyframes twinkle{
+    0%,100%{opacity:0.2;}
+    50%{opacity:1;}
+}
+
+/* App容器 */
+
+.app{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:500px;
+    height:100vh;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+}
+
+/* 顶部 */
+
+.header{
+    padding:20px;
+    text-align:center;
+}
+
+.logo{
+    font-size:34px;
+    font-weight:bold;
+    text-shadow:0 0 18px cyan;
+}
+
+.sub{
+    margin-top:6px;
+    opacity:0.8;
+}
+
+/* 用户信息 */
+
+.userBox{
+    margin:15px;
+    background:
+    linear-gradient(145deg,#1e293b,#334155);
+
+    border-radius:22px;
+
+    padding:18px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,.15);
+}
+
+.avatar{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:
+    linear-gradient(145deg,#00d2ff,#3a7bd5);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:30px;
+}
+
+.userInfo{
+    flex:1;
+    margin-left:14px;
+}
+
+.name{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.level{
+    margin-top:5px;
+    color:#ffe66d;
+}
+
+.coin{
+    font-size:24px;
+    color:#ffd700;
+}
+
+/* 菜单 */
+
+.menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    padding:18px;
+}
+
+.card{
+
+    background:
+    linear-gradient(145deg,#00d2ff,#3a7bd5);
+
+    border-radius:24px;
+
+    height:150px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    box-shadow:
+    0 0 18px rgba(0,255,255,.25),
+    inset 0 0 10px rgba(255,255,255,.3);
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.icon{
+    font-size:48px;
+}
+
+.cardTitle{
+    margin-top:12px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* 底部菜单 */
+
+.bottomBar{
+
+    margin-top:auto;
+
+    height:85px;
+
+    background:
+    rgba(15,23,42,.95);
+
+    border-top:
+    1px solid rgba(255,255,255,.1);
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    backdrop-filter:blur(10px);
+}
+
+.navBtn{
+    text-align:center;
+    font-size:14px;
+    opacity:0.85;
+}
+
+.navIcon{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+/* 弹窗 */
+
+.popup{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+.popupBox{
+
+    width:90%;
+
+    max-width:420px;
+
+    background:
+    linear-gradient(145deg,#1e293b,#334155);
+
+    border-radius:30px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 0 30px rgba(0,255,255,.35);
+}
+
+.popupTitle{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.playBtn{
+
+    margin-top:25px;
+
+    border:none;
+
+    background:#00eaff;
+
+    color:black;
+
+    padding:16px 36px;
+
+    border-radius:18px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* 手机适配 */
+
+@media(max-width:600px){
+
+    .card{
+        height:130px;
+    }
+
+    .logo{
+        font-size:28px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div class="app">
+
+    <!-- 顶部 -->
+
+    <div class="header">
+
+        <div class="logo">
+            🌟 Kids English 🌟
+        </div>
+
+        <div class="sub">
+            幼儿英语闯关乐园
+        </div>
+
+    </div>
+
+    <!-- 用户 -->
+
+    <div class="userBox">
+
+        <div class="avatar">
+            🧒
+        </div>
+
+        <div class="userInfo">
+
+            <div class="name">
+                小小冒险家
+            </div>
+
+            <div class="level">
+                Lv.3 英语学徒
+            </div>
+
+        </div>
+
+        <div class="coin">
+            ⭐ 128
+        </div>
+
+    </div>
+
+    <!-- 功能菜单 -->
+
+    <div class="menu">
+
+        <div class="card" onclick="openGame()">
+
+            <div class="icon">
+                🎮
+            </div>
+
+            <div class="cardTitle">
+                开始闯关
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                🐶
+            </div>
+
+            <div class="cardTitle">
+                动物英语
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                🍎
+            </div>
+
+            <div class="cardTitle">
+                水果乐园
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                🚀
+            </div>
+
+            <div class="cardTitle">
+                每日挑战
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 底部 -->
+
+    <div class="bottomBar">
+
+        <div class="navBtn">
+
+            <div class="navIcon">🏠</div>
+
+            首页
+
+        </div>
+
+        <div class="navBtn">
+
+            <div class="navIcon">🎮</div>
+
+            游戏
+
+        </div>
+
+        <div class="navBtn">
+
+            <div class="navIcon">🏆</div>
+
+            成就
+
+        </div>
+
+        <div class="navBtn">
+
+            <div class="navIcon">⚙️</div>
+
+            设置
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 弹窗 -->
+
+<div class="popup" id="popup">
+
+    <div class="popupBox">
+
+        <div class="popupTitle">
+            🎉 英语闯关模式
+        </div>
+
+        <p>
+            10大关卡<br><br>
+            动物 / 水果 / 数字 / 颜色<br><br>
+            点击单词自动发音
+        </p>
+
+        <button class="playBtn"
+        onclick="startGame()">
+
+            开始冒险 →
+
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/* 星空 */
+
+const stars=document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+    const s=document.createElement("div");
+
+    s.className="star";
+
+    s.style.left=Math.random()*100+"%";
+
+    s.style.top=Math.random()*100+"%";
+
+    s.style.animationDelay=Math.random()*5+"s";
+
+    stars.appendChild(s);
+
+}
+
+/* 打开游戏 */
+
+function openGame(){
+
+    document.getElementById("popup")
+    .style.display="flex";
+
+}
+
+/* 开始 */
+
+function startGame(){
+
+    speechSynthesis.speak(
+        new SpeechSynthesisUtterance(
+            "Welcome to Kids English Adventure"
+        )
+    );
+
+    alert(
+"这里以后可以进入你的连连看正式游戏页面！"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
